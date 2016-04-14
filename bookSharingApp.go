@@ -39,6 +39,9 @@ func Register(templates *template.Template) {
 	hc := new(controllers.HomeController)
 	hc.Template = templates.Lookup("home.html")
 	http.Handle("/", hc)
+
+	lc := new(controllers.LoginController)
+	http.Handle("/Login", lc)
 }
 
 func main() {
