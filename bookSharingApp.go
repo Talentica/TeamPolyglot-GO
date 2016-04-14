@@ -1,16 +1,22 @@
 package main
 
 import (
+	"controllers"
 	"fmt"
 	"html/template"
 	"net/http"
 	"os"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func populateTemplates() *template.Template {
+	result := template.New("templates")
+
 	basePath := "templates"
-	templateFolder, err1 := os.Open(basePath)
-	fmt.Println(err1)
+	templateFolder, err := os.Open(basePath)
+	fmt.Println(err)
+	if err != nil {
+		return nil
+	}
 	defer templateFolder.Close()
 
 	templatePathsRaw, _ := templateFolder.Readdir(-1)
@@ -20,22 +26,27 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if !pathInfo.IsDir() {
 			*templatePaths = append(*templatePaths,
 				basePath+"/"+pathInfo.Name())
-
 			fmt.Println(basePath + "/" + pathInfo.Name())
 		}
 	}
 
-	result := template.New("templates")
-	result, e := result.ParseFiles(*templatePaths...)
-	fmt.Println(e) // merge.
-	err := result.Lookup("home.html").Execute(w, nil)
-	fmt.Println(err) // merge.
+	result.ParseFiles(*templatePaths...)
+
+	return result
+}
+
+func Register(templates *template.Template) {
+	hc := new(controllers.HomeController)
+	hc.Template = templates.Lookup("home.html")
+	http.Handle("/", hc)
 }
 
 func main() {
 
-	http.HandleFunc("/", handler)
-
-	http.ListenAndServe(":8080", nil)
+	templates := populateTemplates()
+	if templates != nil {
+		Register(templates)
+		http.ListenAndServe(":8080", nil)
+	}
 
 }
