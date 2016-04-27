@@ -3,8 +3,10 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/Talentica/TeamPolyglot-GO/models"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 )
 
@@ -12,10 +14,39 @@ import (
 func Login(w http.ResponseWriter, r *http.Request) {
 	requestUser := new(models.User)
 	decoder := json.NewDecoder(r.Body)
-	decoder.Decode(&requestUser)
-	s := "Hello " + requestUser.Username
-	w.Write([]byte(s))
-	w.WriteHeader(http.StatusOK)
+	response := new(models.Response)
+	if err := decoder.Decode(&requestUser); err == nil {
+
+		token := jwt.New(jwt.SigningMethodHS256)
+
+		token.Claims["name"] = "requestUser.Username"
+		token.Claims["iat"] = time.Now().Unix()
+		token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+
+		jwtString, errJwt := token.SignedString([]byte("secret"))
+
+		if errJwt == nil {
+
+			response.Data = jwtString
+			response.Message = "success"
+			response.Status = true
+			w.WriteHeader(http.StatusOK)
+
+		} else {
+			response.Data = errJwt.Error()
+			response.Message = "failure"
+			response.Status = false
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+
+	} else {
+		response.Data = err.Error()
+		response.Message = "failure"
+		response.Status = false
+		w.WriteHeader(http.StatusBadRequest)
+	}
+	encoder := json.NewEncoder(w)
+	encoder.Encode(response)
 }
 
 //Logout current logged-in user
