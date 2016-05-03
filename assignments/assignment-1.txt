@@ -7,6 +7,17 @@
 
 3. Write a function with one variadic parameter that finds the greatest number in a list of numbers.
 
-4. What are defer, panic and recover? How do you recover from a run-time panic?
+4. What is iota used for ? Write a small code defining constants first, second, third with values 0, 1 and 2. Now print them.
 
-5. Add a new method to the Shape interface called perimeter which calculates the perimeter of a shape. Implement the method for Circle and Rectangle.
+5. What is an equivalent one liner code for following-
+	myArray := [3]int{}
+	myArray[0] = 23
+	myArray[1] = 47
+	myArray[2] = 61
+	
+6. Write a function, that takes integers as its argument and returns the number of arguments and its sum-
+eg. addAll(2,5,3) should return 3 and 9 . Similarily, addAll(5,6,7,10) should return 4 and 28	
+
+7. What are defer, panic and recover? How do you recover from a run-time panic?
+
+8. Add a new method to the Shape interface called perimeter which calculates the perimeter of a shape. Implement the method for Circle and Rectangle.
