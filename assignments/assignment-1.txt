@@ -1,0 +1,95 @@
+1. Our program began with package main. What would the files in the fmt package begin with?
+
+A - package fmt
+
+2. Given the array:
+
+	x := [6]string{"a","b","c","d","e","f"}
+	what would x[2:5] give you?
+
+A - 	[c","d","e","f"}
+	
+3. Write a function with one variadic parameter that finds the greatest number in a list of numbers.
+
+A - 
+package main
+import "fmt"
+
+
+func greatestnumber(nums ...int) {
+    
+    result := 0
+    for _, num := range nums {
+        if (num > result){
+		result = num
+	}
+
+    }
+    fmt.Println(result )
+}
+
+func main() {
+
+   
+    greatestnumber(10, 20)
+    greatestnumber(11, 12, 13)
+
+    nums := []int{101, 202, 303, 404}
+    greatestnumber(nums...)
+}
+
+4. What is iota used for ? Write a small code defining constants first, second, third with values 0, 1 and 2. Now print them.
+
+package main
+import "fmt"
+
+
+const (
+    first= iota
+    second
+    third 
+)
+
+func main() {
+	fmt.Println(first)
+   fmt.Println(second)
+   fmt.Println(third )
+}
+
+5. What is an equivalent one liner code for following-
+	myArray := [3]int{}
+	myArray[0] = 23
+	myArray[1] = 47
+	myArray[2] = 61
+	
+A - 
+	myArray := []int {23,47,61}
+	
+6. Write a function, that takes integers as its argument and returns the number of arguments and its sum-
+eg. addAll(2,5,3) should return 3 and 10 . Similarily, addAll(5,6,7,10) should return 4 and 28	
+
+package main
+import "fmt"
+
+
+func sum(nums ...int) (count, total int) {
+    
+    for _, num := range nums {
+       total += num
+	count++
+
+    }
+return 
+}
+
+func main() {
+
+   
+   c, s := sum(2,5,3)
+fmt.Println(c)
+fmt.Println(s)
+   
+}
+7. What are defer, panic and recover? How do you recover from a run-time panic?
+
+8. Add a new method to the Shape interface called perimeter which calculates the perimeter of a shape. Implement the method for Circle and Rectangle.
