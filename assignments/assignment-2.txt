@@ -4,7 +4,7 @@ http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
 Create the domain entities, controllers, repositories and service layers. You can just have a placeholder files for each of them if there is nothing significant to be written in any of these layers.
 
-If each of you do this exercise, we can compare what different infrastructure libraries(Code that handles DB connections, The HTTP server etc) are available and what are their pros and cons over each other.
+If each of you do this exercise, we can compare what different infrastructure libraries(Code that handles DB connections, routings ,The HTTP server etc) are available and what are their pros and cons over each other.
 
 Here are the details of the APIs to be created-
 
