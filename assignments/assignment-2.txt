@@ -1,0 +1,108 @@
+Create a server that serves REST apis of a ToDo applications. Also please ensure that it complies to the design recommended in this article-
+
+http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
+
+
+1. GET '/todo/api/v1.0/tasks'
+
+[
+    {
+        'id': 1,
+        'title': 'Buy groceries',
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+        'done': False
+    },
+    {
+        'id': 2,
+        'title': 'Learn Golang',
+        'description': 'Need to find a good golang tutorial on the web', 
+        'done': False
+    }
+]
+
+
+
+2. GET /todo/api/v1.0/tasks/[task_id]
+{
+  "task": {
+    "description": "Need to find a good Golang tutorial on the web",
+    "done": false,
+    "id": 2,
+    "title": "Learn Golang"
+  }
+}
+
+-----------------------------------------
+404 response if the id doesn't exists
+
+GET /todo/api/v1.0/tasks/3
+HTTP/1.0 404 NOT FOUND
+Content-Type: application/json
+Content-Length: 26
+Server: Werkzeug/0.8.3 Python/2.7.3
+Date: Mon, 20 May 2013 05:36:54 GMT
+
+{
+  "error": "Not found"
+}
+
+
+3. POST /todo/api/v1.0/tasks
+{
+	"title":"Read a book"
+}
+
+Response:
+HTTP/1.0 201 Created
+Content-Type: application/json
+Content-Length: 104
+
+{
+  "task": {
+    "description": "",
+    "done": false,
+    "id": 3,
+    "title": "Read a book"
+  }
+}
+
+
+4. POST /todo/api/v1.0/tasks
+Request:
+{
+  "tasks": [
+    {
+      "description": "Milk, Cheese, Pizza, Fruit, Tylenol",
+      "done": false,
+      "id": 1,
+      "title": "Buy groceries"
+    },
+    {
+      "description": "Need to find a good Golang tutorial on the web",
+      "done": false,
+      "id": 2,
+      "title": "Learn Golang"
+    },
+    {
+      "description": "",
+      "done": false,
+      "id": 3,
+      "title": "Read a book"
+    }
+  ]
+}
+
+5. A function call that updates task #2 as being done would be done as follows:
+
+PUT /todo/api/v1.0/tasks/2
+{
+  "task": [
+    {
+      "description": "Need to find a good Python tutorial on the web",
+      "done": true,
+      "id": 2,
+      "title": "Learn Python"
+    }
+  ]
+}
